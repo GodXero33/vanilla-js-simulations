@@ -1,11 +1,11 @@
-setControllerProperty('commonWarnings', true);
-setControllerProperty('autoPlay', true);
+import * as AnimatorModule from '../common/js/common.main.js';
 
-const canvas = createCanvas({
+AnimatorModule.setControllerProperty('commonWarnings', true);
+AnimatorModule.setControllerProperty('autoPlay', true);
+
+const canvas = AnimatorModule.createCanvas({
 	parent: document.getElementById('main-container'),
-	update: () => {
-		
-	},
+	update: () => {},
 	draw: (ctx) => {
 		ctx.fillStyle = '#121212';
 		
@@ -15,11 +15,11 @@ const canvas = createCanvas({
 		
 		ctx.translate(canvas.width * 0.5, canvas.height * 0.5);
 
-		
-
 		ctx.setTransform(transform);
 	}
 });
+
+console.log(canvas);
 
 window.addEventListener('keyup', event => {
 	if (event.code === 'Space') canvas.isPlaying ? canvas.pause() : canvas.play();

@@ -1,5 +1,7 @@
-setControllerProperty('commonWarnings', true);
-setControllerProperty('autoPlay', true);
+import * as AnimatorModule from '../common/js/common.main.js';
+
+AnimatorModule.setControllerProperty('commonWarnings', true);
+AnimatorModule.setControllerProperty('autoPlay', true);
 
 // <<< ===================== REMOVE
 
@@ -36,7 +38,7 @@ for (let a = 0; a < 10; a++) {
 
 // REMOVE ===================== >>>
 
-const canvas = createCanvas({
+const canvas = AnimatorModule.createCanvas({
 	parent: document.getElementById('main-container'),
 	update: () => {
 		// <<< ===================== REMOVE
@@ -59,6 +61,8 @@ const canvas = createCanvas({
 		ctx.setTransform(transform);
 	}
 });
+
+console.log(canvas);
 
 window.addEventListener('keyup', event => {
 	if (event.code === 'Space') canvas.isPlaying ? canvas.pause() : canvas.play();

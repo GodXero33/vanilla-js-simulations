@@ -239,3 +239,8 @@ function createCanvas ({
 
 	return canvas;
 }
+
+export {
+	setControllerProperty,
+	createCanvas
+};
