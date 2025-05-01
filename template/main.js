@@ -1,6 +1,8 @@
 setControllerProperty('commonWarnings', true);
 setControllerProperty('autoPlay', true);
 
+// <<< ===================== REMOVE
+
 class Dummy {
 	constructor (x, y, r, v, color) {
 		this.x = x;
@@ -27,10 +29,19 @@ class Dummy {
 }
 
 const dummies = [];
+
+for (let a = 0; a < 10; a++) {
+	dummies.push(new Dummy(0, 0, 30 + a * 25, 0.01, '#f00'));
+}
+
+// REMOVE ===================== >>>
+
 const canvas = createCanvas({
 	parent: document.getElementById('main-container'),
 	update: () => {
+		// <<< ===================== REMOVE
 		dummies.forEach(dummy => dummy.update());
+		// REMOVE ===================== >>>
 	},
 	draw: (ctx) => {
 		ctx.fillStyle = '#121212';
@@ -41,15 +52,13 @@ const canvas = createCanvas({
 		
 		ctx.translate(canvas.width * 0.5, canvas.height * 0.5);
 
+		// <<< ===================== REMOVE
 		dummies.forEach(dummy => dummy.draw(ctx));
+		// REMOVE ===================== >>>
 
 		ctx.setTransform(transform);
 	}
 });
-
-for (let a = 0; a < 10; a++) {
-	dummies.push(new Dummy(0, 0, 30 + a * 25, 0.01, '#f00'));
-}
 
 window.addEventListener('keyup', event => {
 	if (event.code === 'Space') canvas.isPlaying ? canvas.pause() : canvas.play();
