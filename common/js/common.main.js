@@ -24,6 +24,14 @@ class InvalidDrawCallbackError extends Error {
 	}
 }
 
+class InvalidResizeCallbackError extends Error {
+	constructor(receivedValue) {
+		super(`Invalid resize callback provided. Expected a function but received: ${typeof receivedValue}`);
+
+		this.name = 'InvalidResizeCallbackError';
+	}
+}
+
 class CommonCanvasAnimator {
 	constructor () {
 		this.isPlaying = false;
@@ -106,6 +114,7 @@ class CommonCanvas {
 		this.isPlaying = false;
 		this.updateCallback = null;
 		this.drawCallback = null;
+		this.resizeCallback = null;
 
 		this.#animator = null;
 	}
@@ -124,6 +133,7 @@ class CommonCanvas {
 		this.canvas.height = this.height;
 
 		if (this.isPlaying && typeof this.drawCallback === 'function') this.drawCallback(this.ctx);
+		if (typeof this.resizeCallback === 'function') this.resizeCallback(this.ctx);
 	}
 
 	pause () {
@@ -197,7 +207,8 @@ function setControllerProperty (propertyName, value) {
 function createCanvas ({
 	parent = document.body,
 	update = null,
-	draw = null
+	draw = null,
+	resize = null
 } = {}) {
 	if (showCommonWarnings && canvasPool.has(parent)) console.warn('Multiple canvases detected for the same parent element. This may lead to visibility issues or rendering conflicts. Recommendation: Use unique parent elements or manage canvas visibility manually.');
 
@@ -233,9 +244,11 @@ function createCanvas ({
 
 	if (update !== null && typeof update !== 'function') throw new InvalidUpdateCallbackError(update);
 	if (draw !== null && typeof draw !== 'function') throw new InvalidDrawCallbackError(draw);
+	if (resize !== null && typeof resize !== 'function') throw new InvalidResizeCallbackError(resize);
 
 	canvas.updateCallback = update;
 	canvas.drawCallback = draw;
+	canvas.resizeCallback = resize;
 
 	return canvas;
 }
